@@ -11,7 +11,7 @@ public class Account {
             if (account[i][0] != null) {
                System.out.print("[" + (i + 1) + "] ");
                System.out.print("1. " + account[i][0]);
-               System.out.print(" 항목: " + account[i][1]);
+               System.out.print("2. 항목: " + account[i][1]);
                System.out.println(" 가격: " + account[i][2]);
             }
          }
