@@ -1,0 +1,17 @@
+package algorithm02;
+import java.util.Scanner;import java.util.StringTokenizer;
+public class main { public static void main(String[] args) {  int num, source, dest;  int[][] Weight, Distance, Path;
+  Scanner scan = new Scanner(System.in);  String input = scan.nextLine().trim();
+  StringTokenizer st = new StringTokenizer(input, ", | \" | ");
+  num = Integer.parseInt(st.nextToken()) + 1;  Weight = new int[num][num];  Distance = new int[num][num];  Path = new int[num][num];
+  for (int i = 1; i < num; i++) {   for (int k = 1; k < num; k++) {    Weight[i][k] = Integer.parseInt(st.nextToken());   }  }  source = Integer.parseInt(st.nextToken());  dest = Integer.parseInt(st.nextToken());
+  Floyd(num, Distance, Weight, Path);
+  System.out.print("\n  " + source + "-");  Path(source, dest, Path);  System.out.print(dest);
+ }
+ private static void Floyd(int n, int[][] D, int[][] W, int[][] P) {  // TODO Auto-generated method stub  int i, j, k;  for (i = 1; i < n; i++)   for (j = 1; j < n; j++) {    D[i][j] = W[i][j];    P[i][j] = 0;
+   }  for (k = 1; k < n; k++)   for (i = 1; i < n; i++)    for (j = 1; j < n; j++)     if ((D[i][k] > 0 && D[k][j] > 0) && (D[i][j] < 0 || (D[i][j] > D[i][k] + D[k][j]))) {      D[i][j] = D[i][k] + D[k][j];      P[i][j] = k;     }
+  // Print  System.out.println("\n  D");  for (i = 1; i < n; i++) {   for (j = 1; j < n; j++)    System.out.printf("%3d", D[i][j]);   System.out.println("");  }
+  System.out.println("\n  P");  for (i = 1; i < n; i++) {   for (j = 1; j < n; j++)    System.out.printf("%3d", P[i][j]);   System.out.println("");  }
+ }
+ private static void Path(int q, int r, int[][] P) {  // TODO Auto-generated method stub  if (P[q][r] != 0) {   Path(q, P[q][r], P);   System.out.print(P[q][r] + "-");   Path(P[q][r], r, P);  } }
+}
