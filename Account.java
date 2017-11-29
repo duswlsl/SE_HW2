@@ -10,7 +10,7 @@ public class Account {
          for (int i = 0; i < accIndex; i++) { // ÀüÃ¼ ³»¿ª Ãâ·Â*******
             if (account[i][0] != null) {
                System.out.print("[" + (i + 1) + "] ");
-               System.out.print(" ³¯Â¥: " + account[i][0]);
+               System.out.print(" 11¯Â¥: " + account[i][0]);
                System.out.print(" Ç×¸ñ: " + account[i][1]);
                System.out.println(" °¡°Ý: " + account[i][2]);
             }
