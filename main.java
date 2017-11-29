@@ -1,1 +1,1 @@
-public main
+public main{}{}main
