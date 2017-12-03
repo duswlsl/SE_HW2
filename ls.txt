@@ -1,6 +1,0 @@
-Account.java
-calculator.java
-ls.txt
-main.java
-Memo.java
-README.md
