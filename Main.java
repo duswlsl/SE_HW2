@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 
-		String[][] account = new String[20][3];// 계좌를 저장할 배열 생성
+		String[][] account = new String[10][3];// 계좌를 저장할 배열 생성
 
 		while (true) {
 
