@@ -8,7 +8,7 @@ public class Memo {
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
 
-	String[] memo = new String[10];// ¸Þ¸ð¸¦ ÀúÀåÇÒ ¹è¿­ »ý¼º
+	String[] memo = new String[10];// ë©”ëª¨ë¥¼ ì €ìž¥í•  ë°°ì—´ ìƒì„±
 	int memoIndex = 0;
 
 	public Memo() {
@@ -30,12 +30,12 @@ public class Memo {
 		while (true) {
 			showMemo();
 			System.out.println("=====MEMO=====");
-			System.out.println("1. ¸Þ¸ð ÀÛ¼º");
-			System.out.println("2. ¸Þ¸ð ¼öÁ¤");
-			System.out.println("3. ¸Þ¸ð »èÁ¦");
-			System.out.println("4. ¸ÞÀÎ¸Þ´º·Î µ¹¾Æ°¡±â");
+			System.out.println("1. ë©”ëª¨ ìž‘ì„±");
+			System.out.println("2. ë©”ëª¨ ìˆ˜ì •");
+			System.out.println("3. ë©”ëª¨ ì‚­ì œ");
+			System.out.println("4. ë©”ì¸ë©”ë‰´ë¡œ ëŒì•„ê°€ê¸°");
 			System.out.println("==============");
-			System.out.print("¿øÇÏ´Â ±â´ÉÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.>> ");
+			System.out.print("ì›í•˜ëŠ” ê¸°ëŠ¥ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.>> ");
 
 			int mmenu = scanner.nextInt();
 
@@ -44,7 +44,7 @@ public class Memo {
 			}
 
 			if ((mmenu > 4) || (mmenu < 1))
-				System.out.println("Àß¸øµÈ ¼ýÀÚÀÔ´Ï´Ù.");
+				System.out.println("ìž˜ëª»ëœ ìˆ«ìžìž…ë‹ˆë‹¤.");
 
 			switch (mmenu) {
 
@@ -55,7 +55,7 @@ public class Memo {
 
 			case 2:
 				while (!modMemo())
-					; // ¸Å°³º¯¼ö·Î ¸Þ¸ð ÀÎµ¦½º ¹øÈ£ Àü´Þ
+					; // ë§¤ê°œë³€ìˆ˜ë¡œ ë©”ëª¨ ì¸ë±ìŠ¤ ë²ˆí˜¸ ì „ë‹¬
 				break;
 
 			case 3:
@@ -68,27 +68,27 @@ public class Memo {
 
 	void showMemo() {
 
-		int memo_count = 0;
-		for (int i = 0; i < memo.length; i++) { // ÀüÃ¼ ¸Þ¸ð Ãâ·Â*******
+		
+		for (int i = 0; i < memo.length; i++) { // ì „ì²´ ë©”ëª¨ ì¶œë ¥*******
 			if (memo[i] != null) {
 				System.out.println("[" + (i + 1) + "] " + memo[i]);
-				memo_count++;
+				
 			}
 		}
 	}
 
 	void makeMemo() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("¿øÇÏ´Â ³»¿ëÀÇ ¸Þ¸ð¸¦ ÀÔ·ÂÇÏ°í ¿£ÅÍ¸¦ ´©¸£¼¼¿ä.");
+		System.out.println("ì›í•˜ëŠ” ë‚´ìš©ì˜ ë©”ëª¨ë¥¼ ìž…ë ¥í•˜ê³  ì—”í„°ë¥¼ ëˆ„ë¥´ì„¸ìš”.");
 		String a = scanner.nextLine();
 		memo[memoIndex] = a;
 		fileWrite();
-		System.out.println("¸Þ¸ð ÀúÀå ¿Ï·á");
+		System.out.println("ë©”ëª¨ ì €ìž¥ ì™„ë£Œ");
 	}
 
 	boolean modMemo() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("¼öÁ¤ÇÒ ¸Þ¸ðÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(¸Þ´º·Î µ¹¾Æ°¡·Á¸é 0ÀÔ·Â)");
+		System.out.println("ìˆ˜ì •í•  ë©”ëª¨ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.(ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ 0ìž…ë ¥)");
 		searchnum = scanner.nextInt();
 		scanner.nextLine();
 
@@ -96,11 +96,11 @@ public class Memo {
 			return true;
 
 		if (memo[searchnum - 1] == null) {
-			System.out.println("Àß¸øµÈ ¹øÈ£ÀÔ´Ï´Ù.");
+			System.out.println("ìž˜ëª»ëœ ë²ˆí˜¸ìž…ë‹ˆë‹¤.");
 			return false;
 		} else {
-			System.out.println("¼öÁ¤ÇÒ ¸Þ¸ð´Â \"" + memo[searchnum - 1] + "\"ÀÔ´Ï´Ù.");
-			System.out.println("¼öÁ¤ÇÒ ¸Þ¸ðÀÇ ³»¿ëÀ» »õ·Î ÀÔ·ÂÇÏ¼¼¿ä.");
+			System.out.println("ìˆ˜ì •í•  ë©”ëª¨ëŠ” \"" + memo[searchnum - 1] + "\"ìž…ë‹ˆë‹¤.");
+			System.out.println("ìˆ˜ì •í•  ë©”ëª¨ì˜ ë‚´ìš©ì„ ìƒˆë¡œ ìž…ë ¥í•˜ì„¸ìš”.");
 			String str = scanner.nextLine();
 			memo[searchnum - 1] = str;
 			fileWrite();
@@ -110,7 +110,7 @@ public class Memo {
 	}
 
 	boolean delMemo() {
-		System.out.println("»èÁ¦ÇÒ ¸Þ¸ðÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.(¸Þ´º·Î µ¹¾Æ°¡·Á¸é 0 ÀÔ·Â)");
+		System.out.println("ì‚­ì œí•  ë©”ëª¨ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.(ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ 0 ìž…ë ¥)");
 		searchnum = scanner.nextInt();
 		scanner.nextLine();
 
@@ -118,12 +118,12 @@ public class Memo {
 			return true;
 
 		if (memo[searchnum - 1] == null) {
-			System.out.println("Àß¸øµÈ ¹øÈ£ÀÔ´Ï´Ù.");
+			System.out.println("ìž˜ëª»ëœ ë²ˆí˜¸ìž…ë‹ˆë‹¤.");
 			return false;
 		} else {
-			memo[searchnum - 1] = null; // ¸Þ¸ð»èÁ¦
+			memo[searchnum - 1] = null; // ë©”ëª¨ì‚­ì œ
 			fileWrite();
-			System.out.println("»èÁ¦ ¿Ï·á");
+			System.out.println("ì‚­ì œ ì™„ë£Œ");
 			return true;
 		}
 	}
@@ -134,7 +134,7 @@ public class Memo {
 			oos.writeObject(memo);
 			oos.close();
 		} catch (Exception e) {
-			System.out.println("ÀÔÃâ·Â¿À·ù");
+			System.out.println("ìž…ì¶œë ¥ì˜¤ë¥˜");
 		}
 	}
 }
