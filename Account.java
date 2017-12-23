@@ -3,47 +3,38 @@ import java.util.Scanner;
 
 public class Account {
 	Scanner scanner = new Scanner(System.in);
-	int searchnum;
 	ObjectOutputStream oos = null;
 	ObjectInputStream ois = null;
+	int searchnum;
+	int accIndex;
 
-	int accIndex = 0;
+	public void AccountFunc(String[][] account) {
 
-	public int AccountFunc(String[][] account) {
 		try {
 			ois = new ObjectInputStream(new FileInputStream("account.dat"));
 			account = (String[][]) ois.readObject();
 			ois.close();
 			for (int i = 0; i < account.length; i++) {
-				if (account[i][0] != null)
-					accIndex = (i + 1);
-			}
-		} catch (
-
-		Exception e) {
-		}
-
-		while (true) {
-			for (int i = 0; i < account.length; i++) {
-				if (account[i] != null)
-					accIndex = (i + 1);
-			}
-
-			for (int i = 0; i < accIndex; i++) { // 전체 내역 출력*******
 				if (account[i][0] != null) {
-					System.out.print("[" + (i + 1) + "] ");
-					System.out.print(" 날짜: " + account[i][0]);
-					System.out.print(" 항목: " + account[i][1]);
-					System.out.println(" 가격: " + account[i][2]);
+					{
+						accIndex = (i + 1);
+					}
 				}
 			}
 
+		} catch (Exception e) {
+		}
+
+		while (true) {
+
+			showAcc(account, accIndex);
+
 			System.out.println("=====ACCOUNT=====");
-			System.out.println("1. 가계부 작성");
-			System.out.println("2. 가계부 수정");
-			System.out.println("3. 가계부 삭제");
-			System.out.println("4. 메인메뉴로 돌아가기");
-			System.out.println("==============");
+			System.out.println(" 1. 가계부 작성 ");
+			System.out.println(" 2. 가계부 수정 ");
+			System.out.println(" 3. 가계부 삭제 ");
+			System.out.println(" 4. 메인메뉴로 돌아가기 ");
+			System.out.println("=================");
 			System.out.print("원하는 기능의 번호를 입력하세요.>> ");
 
 			int acc_menu = scanner.nextInt();
@@ -59,8 +50,7 @@ public class Account {
 			switch (acc_menu) {
 
 			case 1:
-				System.out.println("가계부작성");
-				accIndex = makeAcc(account);
+				accIndex = makeAcc(account, accIndex);
 				break;
 
 			case 2:
@@ -74,30 +64,41 @@ public class Account {
 				break;
 			}
 		} // while
-		return accIndex;
 	}// AccountFunc
 
-	int makeAcc(String[][] account) {
+	void showAcc(String[][] account, int accIndex) {
+		System.out.println("***********************************");
+		for (int i = 0; i < accIndex; i++) { // 전체 내역 출력*******
+			if (account[i][0] != null) {
+				System.out.print("[" + (i + 1) + "] ");
+				System.out.print(" 날짜: " + account[i][0]);
+				System.out.print(" 항목: " + account[i][1]);
+				System.out.println(" 가격: " + account[i][2]);
+			}
+		}
+		System.out.println("***********************************");
+	}
+
+	int makeAcc(String[][] account, int indexnum) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("가계부의 날짜를 입력하세요.");
-
-		account[accIndex][0] = scanner.nextLine();
+		account[indexnum][0] = scanner.nextLine();
 
 		System.out.println("가계부의 항목을 입력하세요. ");
-		account[accIndex][1] = scanner.nextLine();
+		account[indexnum][1] = scanner.nextLine();
 
 		System.out.println("가계부의 가격을 입력하세요. ");
-		account[accIndex][2] = scanner.nextLine();
+		account[indexnum][2] = scanner.nextLine();
 
 		fileWrite(account);
 		System.out.println("가계부 저장 완료");
 
-		return accIndex + 1;
+		return indexnum + 1;
 	}
 
 	boolean modAcc(String[][] account) {
-		System.out.println("수정하고자 하는 가계부의 번호를 입력하세요. 이전단계0");
-		int searchnum = scanner.nextInt() - 1;
+		System.out.println("수정하고자 하는 가계부의 번호를 입력하세요.(메뉴로 돌아가려면 0입력)");
+		searchnum = scanner.nextInt() - 1;
 
 		if (searchnum == -1)
 			return true;
@@ -107,7 +108,11 @@ public class Account {
 			return false;
 		} else {
 			System.out.println("찾으시는 가계부는");
-			System.out.println(account[searchnum][1] + "입니다.");
+			System.out.print("[" + (searchnum + 1) + "] ");
+			System.out.print(" 날짜: " + account[searchnum][0]);
+			System.out.print(" 항목: " + account[searchnum][1]);
+			System.out.print(" 가격: " + account[searchnum][2]);
+			System.out.println(" 입니다.");
 
 			String[] info = new String[3];
 			scanner.nextLine();
@@ -135,7 +140,7 @@ public class Account {
 
 	boolean delAcc(String[][] account) {
 
-		System.out.println("수정하고자 하는 가계부의 번호를 입력하세요. 이전단계0");
+		System.out.println("삭제하고자 하는 가계부의 번호를 입력하세요.(메뉴로 돌아가려면 0입력)");
 		searchnum = scanner.nextInt() - 1;
 
 		if (searchnum == -1)
@@ -147,7 +152,7 @@ public class Account {
 		} else {
 			deleteAcc(account, searchnum);
 
-			System.out.println("delete");
+			System.out.println("가계부 삭제 완료");
 			fileWrite(account);
 			return true;
 		}
@@ -157,6 +162,7 @@ public class Account {
 		for (int i = 0; i < 3; i++)
 			account[searchnum][i] = null;
 	}
+
 	void fileWrite(String[][] account) {
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream("account.dat"));
