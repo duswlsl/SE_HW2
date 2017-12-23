@@ -5,12 +5,12 @@ import org.junit.Test;
 
 public class Test_1510159 {
 
-   String[] test = {"ÇĎłŞ", "ľŃ"};
+   String[] test = {"a", "b"};
 
    @Test
    public void testModifyMemo() {
       Memo m = new Memo();
-      String memo1 = "žČłçÇĎźźżä";
+      String memo1 = "Hello";
       m.modifyMemo(test, 0, memo1);
       assertEquals(memo1, test[0]);
    }
