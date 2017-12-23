@@ -3,14 +3,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class MemoTest {
+public class Test_1510159 {
 
-   String[] test = {"ÇÏ³ª", "µÑ"};
+   String[] test = {"Ã‡ÄŽÅ‚Åž", "Ä¾Åƒ"};
 
    @Test
    public void testModifyMemo() {
       Memo m = new Memo();
-      String memo1 = "¾È³çÇÏ¼¼¿ä";
+      String memo1 = "Å¾ÄŒÅ‚Ã§Ã‡ÄŽÅºÅºÅ¼Ã¤";
       m.modifyMemo(test, 0, memo1);
       assertEquals(memo1, test[0]);
    }
