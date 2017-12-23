@@ -24,13 +24,16 @@ public class Calculator {
 
 			case 1: // 사칙연산
 				int i = 0;
+				int check=0;
 				double[] num = new double[2];
 				scanner.nextLine();
-				System.out.println("식을 입력하세요. (숫자 연산자 숫자 순서대로)");
+				System.out.println("식을 입력하세요.(숫자 연산자 숫자 순서대로)");
+				System.out.println("(연산자는  +,-,*,/만 가능합니다)");
 				String operation = scanner.nextLine().trim();
 				String[] operator = { "+", "-", "/", "*" };
-
+				try{
 				for (String k : operator) {
+					check++;
 					StringTokenizer st = new StringTokenizer(operation, k);
 					if (st.countTokens() == 2) {
 						while (st.hasMoreTokens()) {
@@ -40,6 +43,13 @@ public class Calculator {
 						calculate(num[0], k, num[1]);
 						break;
 					}
+					else {
+						if(check==4)
+						System.out.println("올바른 형식이 아닙니다.다시 입력하세요.\n");
+					}
+				}}
+				catch(Exception e){
+					System.out.println("올바른 형식이 아닙니다.다시 입력하세요.\n");
 				}
 				break;
 
