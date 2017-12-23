@@ -5,42 +5,45 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 
-		String[][] account = new String[10][3];// °èÁÂ¸¦ ÀúÀåÇÒ ¹è¿­ »ı¼º
-		int accIndex = 0;
+		String[][] account = new String[20][3];// ê³„ì¢Œë¥¼ ì €ì¥í•  ë°°ì—´ ìƒì„±
 
 		while (true) {
 
 			System.out.println("===MAIN MENU===");
-			System.out.println("1. ¸Ş¸ğ");
-			System.out.println("2. °è»ê±â");
-			System.out.println("3. °¡°èºÎ");
-			System.out.println("4. Á¾·á");
+			System.out.println("1. ë©”ëª¨");
+			System.out.println("2. ê³„ì‚°ê¸°");
+			System.out.println("3. ê°€ê³„ë¶€");
+			System.out.println("4. ì¢…ë£Œ");
 			System.out.println("===============");
-			System.out.print("¿øÇÏ´Â ¸Ş´ºÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.>> ");
+			System.out.print("ì›í•˜ëŠ” ë©”ë‰´ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.>> ");
 
 			int menu = scanner.nextInt();
 
 			if ((menu > 4) || (menu < 1))
-				System.out.println("¿øÇÏ´Â ±â´ÉÀÌ ¾ø½À´Ï´Ù.");
+				System.out.println("ì›í•˜ëŠ” ê¸°ëŠ¥ì´ ì—†ìŠµë‹ˆë‹¤.");
 
 			switch (menu) {
 
-			case 1: // ¸Ş¸ğ±â´É
+			case 1: // ë©”ëª¨ê¸°ëŠ¥
 				Memo m = new Memo();
 				m.MemoFunc();
 				break;
 
-			case 2: // °è»ê±â±â´É
+			case 2: // ê³„ì‚°ê¸°ê¸°ëŠ¥
 				Calculator cal = new Calculator();
 				cal.CalFunc();
 				break;
 
-			case 3: // °¡°èºÎ±â´É
+			case 3: // ê°€ê³„ë¶€ê¸°ëŠ¥
 				Account acc = new Account();
 				acc.AccountFunc(account);
 				break;
 
 			case 4:
+				File f1 = new File("memo.dat");
+				File f2 = new File("account.dat");
+				f1.delete();
+				f2.delete();
 				return;
 			}// menu switch
 
