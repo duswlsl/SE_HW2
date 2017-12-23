@@ -1,122 +1,170 @@
+import java.io.*;
 import java.util.Scanner;
 
 public class Account {
-   Scanner scanner = new Scanner(System.in);
-   int searchnum;
+	Scanner scanner = new Scanner(System.in);
+	int searchnum;
+	ObjectOutputStream oos = null;
+	ObjectInputStream ois = null;
 
-   public int AccountFunc(String[][] account, int accIndex) {
-      while (true) {
+	int accIndex = 0;
 
-         for (int i = 0; i < accIndex; i++) { // ÀüÃ¼ ³»¿ª Ãâ·Â*******
-            if (account[i][0] != null) {
-               System.out.print("[" + (i + 1) + "] ");
-               System.out.print(" 11¯Â¥: " + account[i][0]);
-               System.out.print(" Ç×¸ñ: " + account[i][1]);
-               System.out.println(" °¡°Ý: " + account[i][2]);
-            }
-         }
+	public int AccountFunc(String[][] account) {
+		try {
+			ois = new ObjectInputStream(new FileInputStream("account.dat"));
+			account = (String[][]) ois.readObject();
+			ois.close();
+			for (int i = 0; i < account.length; i++) {
+				if (account[i][0] != null)
+					accIndex = (i + 1);
+			}
+		} catch (
 
-         System.out.println("=====ACCOUNT=====");
-         System.out.println("1. °¡°èºÎ ÀÛ¼º");
-         System.out.println("2. °¡°èºÎ ¼öÁ¤");
-         System.out.println("3. °¡°èºÎ »èÁ¦");
-         System.out.println("4. ¸ÞÀÎ¸Þ´º·Î µ¹¾Æ°¡±â");
-         System.out.println("==============");
-         System.out.print("¿øÇÏ´Â ±â´ÉÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.>> ");
+		Exception e) {
+		}
 
-         int acc_menu = scanner.nextInt();
+		while (true) {
+			for (int i = 0; i < account.length; i++) {
+				if (account[i] != null)
+					accIndex = (i + 1);
+			}
 
-         if (acc_menu == 4) {
-            System.out.println("¸ÞÀÎ¸Þ´º·Î ÀÌµ¿");
-            break;
-         }
+			for (int i = 0; i < accIndex; i++) { // ì „ì²´ ë‚´ì—­ ì¶œë ¥*******
+				if (account[i][0] != null) {
+					System.out.print("[" + (i + 1) + "] ");
+					System.out.print(" ë‚ ì§œ: " + account[i][0]);
+					System.out.print(" í•­ëª©: " + account[i][1]);
+					System.out.println(" ê°€ê²©: " + account[i][2]);
+				}
+			}
 
-         if ((acc_menu > 4) || (acc_menu < 1))
-            System.out.println("Àß¸øµÈ ¼ýÀÚÀÔ´Ï´Ù.");
+			System.out.println("=====ACCOUNT=====");
+			System.out.println("1. ê°€ê³„ë¶€ ìž‘ì„±");
+			System.out.println("2. ê°€ê³„ë¶€ ìˆ˜ì •");
+			System.out.println("3. ê°€ê³„ë¶€ ì‚­ì œ");
+			System.out.println("4. ë©”ì¸ë©”ë‰´ë¡œ ëŒì•„ê°€ê¸°");
+			System.out.println("==============");
+			System.out.print("ì›í•˜ëŠ” ê¸°ëŠ¥ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.>> ");
 
-         switch (acc_menu) {
+			int acc_menu = scanner.nextInt();
 
-         case 1:
-            System.out.println("°¡°èºÎÀÛ¼º");
-            accIndex = makeAcc(account, accIndex);// ¸Þ¸ð ¹è¿­ ¸®ÅÏ?
-            break;
+			if (acc_menu == 4) {
+				System.out.println("ë©”ì¸ë©”ë‰´ë¡œ ì´ë™");
+				break;
+			}
 
-         case 2:
-            while (!modAcc(account));
-            break;
+			if ((acc_menu > 4) || (acc_menu < 1))
+				System.out.println("ìž˜ëª»ëœ ìˆ«ìžìž…ë‹ˆë‹¤.");
 
-         case 3:
-            while (!delAcc(account));
-            break;
-         }
-      } // while
-      return accIndex;
-   }// AccountFunc
+			switch (acc_menu) {
 
-   int makeAcc(String[][] account, int indexnum) {
-      Scanner scanner = new Scanner(System.in);
-      System.out.println("°¡°èºÎÀÇ ³¯Â¥¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-      account[indexnum][0] = scanner.nextLine();
+			case 1:
+				System.out.println("ê°€ê³„ë¶€ìž‘ì„±");
+				accIndex = makeAcc(account);
+				break;
 
-      System.out.println("°¡°èºÎÀÇ Ç×¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä. ");
-      account[indexnum][1] = scanner.nextLine();
+			case 2:
+				while (!modAcc(account))
+					;
+				break;
 
-      System.out.println("°¡°èºÎÀÇ °¡°ÝÀ» ÀÔ·ÂÇÏ¼¼¿ä. ");
-      account[indexnum][2] = scanner.nextLine();
+			case 3:
+				while (!delAcc(account))
+					;
+				break;
+			}
+		} // while
+		return accIndex;
+	}// AccountFunc
 
-      System.out.println("°¡°èºÎ ÀúÀå ¿Ï·á");
+	int makeAcc(String[][] account) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("ê°€ê³„ë¶€ì˜ ë‚ ì§œë¥¼ ìž…ë ¥í•˜ì„¸ìš”.");
 
-      return indexnum + 1;
-   }
+		account[accIndex][0] = scanner.nextLine();
 
-   boolean modAcc(String[][] account) {
-      
-      System.out.println("¼öÁ¤ÇÏ°íÀÚ ÇÏ´Â °¡°èºÎÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ÀÌÀü´Ü°è0");
-      searchnum = scanner.nextInt() - 1;
-      
-      if(searchnum==-1)
-         return true;
-      
-      if (account[searchnum][0] == null) {
-         System.out.println("Àß¸øµÈ ¹øÈ£ÀÔ´Ï´Ù. ");
-         return false;
-      } else {
-         System.out.println("Ã£À¸½Ã´Â °¡°èºÎ´Â");
-         System.out.println(account[searchnum][1] + "ÀÔ´Ï´Ù.");
+		System.out.println("ê°€ê³„ë¶€ì˜ í•­ëª©ì„ ìž…ë ¥í•˜ì„¸ìš”. ");
+		account[accIndex][1] = scanner.nextLine();
 
-         scanner.nextLine();
-         System.out.println("°¡°èºÎÀÇ ³¯Â¥¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-         account[searchnum][0] = scanner.nextLine();
+		System.out.println("ê°€ê³„ë¶€ì˜ ê°€ê²©ì„ ìž…ë ¥í•˜ì„¸ìš”. ");
+		account[accIndex][2] = scanner.nextLine();
 
-         System.out.println("°¡°èºÎÀÇ Ç×¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä. ");
-         account[searchnum][1] = scanner.nextLine();
+		fileWrite(account);
+		System.out.println("ê°€ê³„ë¶€ ì €ìž¥ ì™„ë£Œ");
 
-         System.out.println("°¡°èºÎÀÇ °¡°ÝÀ» ÀÔ·ÂÇÏ¼¼¿ä. ");
-         account[searchnum][2] = scanner.nextLine();
+		return accIndex + 1;
+	}
 
-         System.out.println("°¡°èºÎ ¼öÁ¤ ¿Ï·á");
-         return true;
-      }
-   }
+	boolean modAcc(String[][] account) {
+		System.out.println("ìˆ˜ì •í•˜ê³ ìž í•˜ëŠ” ê°€ê³„ë¶€ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”. ì´ì „ë‹¨ê³„0");
+		int searchnum = scanner.nextInt() - 1;
 
-   boolean delAcc(String[][] account) {
-      
-      System.out.println("¼öÁ¤ÇÏ°íÀÚ ÇÏ´Â °¡°èºÎÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ÀÌÀü´Ü°è0");
-      searchnum = scanner.nextInt() - 1;
-   
-      if(searchnum==-1)
-         return true;
-      
-      if (account[searchnum][0] == null) {
-         System.out.print("Àß¸øµÈ ¹øÈ£ÀÔ´Ï´Ù. ");
-         return false;
-      }else {
-         for(int i=0; i<3; i++)
-            account[searchnum][i]=null;
-         System.out.println("delete");
+		if (searchnum == -1)
+			return true;
 
-         return true;
-      }
+		if (account[searchnum][0] == null) {
+			System.out.println("ìž˜ëª»ëœ ë²ˆí˜¸ìž…ë‹ˆë‹¤. ");
+			return false;
+		} else {
+			System.out.println("ì°¾ìœ¼ì‹œëŠ” ê°€ê³„ë¶€ëŠ”");
+			System.out.println(account[searchnum][1] + "ìž…ë‹ˆë‹¤.");
 
-   }
+			String[] info = new String[3];
+			scanner.nextLine();
+			System.out.println("ê°€ê³„ë¶€ì˜ ë‚ ì§œë¥¼ ìž…ë ¥í•˜ì„¸ìš”.");
+			info[0] = scanner.nextLine();
+
+			System.out.println("ê°€ê³„ë¶€ì˜ í•­ëª©ì„ ìž…ë ¥í•˜ì„¸ìš”. ");
+			info[1] = scanner.nextLine();
+
+			System.out.println("ê°€ê³„ë¶€ì˜ ê°€ê²©ì„ ìž…ë ¥í•˜ì„¸ìš”. ");
+			info[2] = scanner.nextLine();
+
+			modifyAcc(account, searchnum, info);
+			fileWrite(account);
+			System.out.println("ê°€ê³„ë¶€ ìˆ˜ì • ì™„ë£Œ");
+			return true;
+		}
+	}
+
+	void modifyAcc(String[][] account, int searchnum, String[] info) {
+		account[searchnum][0] = info[0];
+		account[searchnum][1] = info[1];
+		account[searchnum][2] = info[2];
+	}
+
+	boolean delAcc(String[][] account) {
+
+		System.out.println("ìˆ˜ì •í•˜ê³ ìž í•˜ëŠ” ê°€ê³„ë¶€ì˜ ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”. ì´ì „ë‹¨ê³„0");
+		searchnum = scanner.nextInt() - 1;
+
+		if (searchnum == -1)
+			return true;
+
+		if (account[searchnum][0] == null) {
+			System.out.print("ìž˜ëª»ëœ ë²ˆí˜¸ìž…ë‹ˆë‹¤. ");
+			return false;
+		} else {
+			deleteAcc(account, searchnum);
+
+			System.out.println("delete");
+			fileWrite(account);
+			return true;
+		}
+	}
+
+	void deleteAcc(String[][] account, int searchnum) {
+		for (int i = 0; i < 3; i++)
+			account[searchnum][i] = null;
+	}
+	void fileWrite(String[][] account) {
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream("account.dat"));
+			oos.writeObject(account);
+			oos.close();
+		} catch (Exception e) {
+			System.out.println("ìž…ì¶œë ¥ì˜¤ë¥˜");
+		}
+	}
+
 }
